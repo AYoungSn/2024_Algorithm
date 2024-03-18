@@ -27,8 +27,6 @@ def solution(h1, m1, s1, h2, m2, s2):
     # 시작 시간 ~ 종료 시간 동안 겹치는 각도 계산하기
     h, m, s = h1, m1, s1
     
-    
-    
     res = getAlarmCnt(h2, m2, s2) - getAlarmCnt(h1, m1, s1)
     if (h1 % 12 == 0) and m1 == 0 and s1 == 0:
         res += 1
