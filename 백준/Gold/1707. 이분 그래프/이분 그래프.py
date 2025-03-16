@@ -13,13 +13,10 @@ for _ in range(T):
 		u, v = map(int, input().split())
 		arr[u].append(v)
 		arr[v].append(u)
-	A = set()
-	B = set()
 	for k in arr.keys():
 		if not uf[k]:
 			que.append(k)
 			uf[k] = 1
-			A.add(k)
 		while que:
 			cur = que.pop(0)
 			v = 1
@@ -27,10 +24,6 @@ for _ in range(T):
 				v = 2
 			for i in arr[cur]:
 				if not uf[i]:
-					if v == 1:
-						A.add(i)
-					else:
-						B.add(i)
 					uf[i] = v
 					que.append(i)
 	check = True
