@@ -1,39 +1,35 @@
 import sys
 from collections import defaultdict
-
-input = lambda: sys.stdin.readline().rstrip()
-
+input = lambda:sys.stdin.readline().rstrip()
 N = int(input())
-
 tree = defaultdict(list)
 
-for i in range(N):
-    node, left, right = input().split()
-    tree[node] = [left, right]
+for _ in range(N):
+  node, left, right = input().split()
+  tree[node] = [left, right]
 
-def preorder(root):
-    print(root, end='')
-    if tree[root][0] != '.':
-        preorder(tree[root][0])
-    if tree[root][1] != '.':
-        preorder(tree[root][1])
+def preOrder(cur):
+  print(cur, end='')
+  if tree[cur][0] != '.':
+    preOrder(tree[cur][0])
+  if tree[cur][1] != '.':
+    preOrder(tree[cur][1])
 
-def inorder(root):
-    if tree[root][0] != '.':
-        inorder(tree[root][0])
-    print(root, end='')
-    if tree[root][1] != '.':
-        inorder(tree[root][1])
+def inOrder(cur):
+  if tree[cur][0] != '.':
+    inOrder(tree[cur][0])
+  print(cur, end='')
+  if tree[cur][1] != '.':
+    inOrder(tree[cur][1])
 
-def postorder(root):
-    if tree[root][0] != '.':
-        postorder(tree[root][0])
-    if tree[root][1] != '.':
-        postorder(tree[root][1])
-    print(root, end='')
-
-preorder('A')
+def postOrder(cur):
+  if tree[cur][0] != '.':
+    postOrder(tree[cur][0])
+  if tree[cur][1] != '.':
+    postOrder(tree[cur][1])
+  print(cur, end='')
+preOrder('A')
 print()
-inorder('A')
+inOrder('A')
 print()
-postorder('A')
+postOrder('A')
