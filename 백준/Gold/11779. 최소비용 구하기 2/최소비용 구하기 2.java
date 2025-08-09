@@ -1,48 +1,50 @@
 import java.io.*;
 import java.util.*;
-
 public class Main {
-	static int N,M, start, dest;
-	static List<int[]>[] graph;
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		N = Integer.parseInt(br.readLine());
-		M = Integer.parseInt(br.readLine());
-		graph = new List[N + 1];
-		for (int i = 0; i < N + 1; i++) {
+		int n = Integer.parseInt(br.readLine());
+		int m = Integer.parseInt(br.readLine());
+		List<int[]>[] graph = new List[n + 1];
+		for (int i = 0; i < n + 1; i++) {
 			graph[i] = new ArrayList<>();
 		}
-		for (int m = 0; m < M; m++) {
-			String[] str = br.readLine().split(" ");
-			graph[Integer.parseInt(str[0])].add(new int[] {Integer.parseInt(str[1]), Integer.parseInt(str[2])});
+		StringTokenizer st;
+		for (int i = 0; i < m; i++) {
+			st = new StringTokenizer(br.readLine());
+			int s = Integer.parseInt(st.nextToken());
+			int e = Integer.parseInt(st.nextToken());
+			int w = Integer.parseInt(st.nextToken());
+			graph[s].add(new int[] {e, w});
 		}
-		String[] str = br.readLine().split(" ");
-		start = Integer.parseInt(str[0]);
-		dest = Integer.parseInt(str[1]);
-		Queue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
-		pq.add(new int[]{start, 0});
-		int[] visited = new int[N + 1];
-		for (int i = 0; i < N + 1; i++) {
-			visited[i] = Integer.MAX_VALUE;
+		st = new StringTokenizer(br.readLine());
+		int S = Integer.parseInt(st.nextToken());
+		int E = Integer.parseInt(st.nextToken());
+		Queue<int[]> que = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
+		que.add(new int[] {S, 0});
+		String[] paths = new String[n + 1];
+		paths[S] = "" + S;
+		int[] dist = new int[n + 1];
+		for (int i = 0; i < n + 1; i++) {
+			dist[i] = Integer.MAX_VALUE;
 		}
-		visited[start] = 0;
-		String[] paths = new String[N + 1];
-		paths[start] = "" + start;
-		while (!pq.isEmpty()) {
-			int[] cur = pq.poll();
-            if (cur[0] == dest) {
+		dist[S] = 0;
+		while (!que.isEmpty()) {
+			int[] cur = que.poll();
+			if (cur[0] == E) {
 				break;
 			}
-			for (int[] next : graph[cur[0]]) {
-				if (visited[next[0]] > next[1] + cur[1] && next[0] != start) {
-					visited[next[0]] = next[1] + cur[1];
-					paths[next[0]] = paths[cur[0]] + " " + next[0];
-					pq.add(new int[] {next[0], visited[next[0]]});
+			for (int[] node : graph[cur[0]]) {
+				if (node[0] != S && dist[node[0]] > cur[1] + node[1]) {
+					dist[node[0]] = cur[1] + node[1];
+					paths[node[0]] = paths[cur[0]] + " " + node[0];
+					que.add(new int[] {node[0], dist[node[0]]});
 				}
 			}
 		}
-		System.out.println(visited[dest]);
-		System.out.println(paths[dest].split(" ").length);
-		System.out.println(paths[dest]);
+		dist[S] =0;
+		System.out.println(dist[E]);
+		System.out.println(paths[E].split(" ").length);
+		System.out.println(paths[E]);
 	}
 }
