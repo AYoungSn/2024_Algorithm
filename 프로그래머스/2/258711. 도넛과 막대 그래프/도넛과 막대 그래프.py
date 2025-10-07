@@ -26,3 +26,16 @@ def solution(edges):
             answer[3] += 1
     answer[1] = graph[answer[0]][0] - answer[2] - answer[3]
     return answer
+
+
+
+
+
+
+
+
+# def solution(edges):
+#     answer = [0,0,0,0]
+    
+    
+#     return answer
